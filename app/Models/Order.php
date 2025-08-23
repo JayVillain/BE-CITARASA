@@ -13,14 +13,14 @@ class Order extends Model
         'order_number',
         'user_id',
         'table_id',
-        'type',
+        'type',        // dine-in / take-away
         'total_price',
         'status'
     ];
 
-    public function items()
+    public function user()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->belongsTo(User::class);
     }
 
     public function table()
@@ -28,8 +28,8 @@ class Order extends Model
         return $this->belongsTo(Table::class);
     }
 
-    public function user()
+    public function items()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(OrderItem::class);
     }
 }
