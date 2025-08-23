@@ -6,23 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->string('full_name')->after('id');        // Nama lengkap
+            $table->string('username')->unique()->after('full_name'); // Username unik
+            $table->string('phone_number')->nullable()->after('email'); // Nomor HP
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn(['full_name', 'username', 'phone_number']);
         });
     }
 };
