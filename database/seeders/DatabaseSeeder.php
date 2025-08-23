@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
             MenuCategorySeeder::class,
             MenuSeeder::class,
             TableSeeder::class,
+            // UserSeeder::class,   // opsional kalau mau tambah user dummy
+            // OrderSeeder::class,  // opsional kalau mau tambah order dummy
         ]);
     }
 }
