@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MenuController;
@@ -13,7 +12,6 @@ use App\Http\Controllers\API\OrderController;
 |--------------------------------------------------------------------------
 | Semua route API didefinisikan di sini.
 | Frontend akan mengakses endpoint ini melalui URL: /api/...
-|
 */
 
 // 🔑 Auth (tidak butuh token)
@@ -32,9 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Menu CRUD (khusus admin / user tertentu)
-    Route::post('/menus', [MenuController::class, 'store']);
-    Route::put('/menus/{id}', [MenuController::class, 'update']);
-    Route::delete('/menus/{id}', [MenuController::class, 'destroy']);
+    Route::apiResource('menus', MenuController::class)->except(['index', 'show']);
 
     // Tables
     Route::apiResource('tables', TableController::class);
