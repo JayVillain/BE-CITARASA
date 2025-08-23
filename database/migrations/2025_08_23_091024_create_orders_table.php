@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_number')->unique();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('table_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('table_id')->nullable()->constrained('tables')->onDelete('set null');
             $table->enum('type', ['dine-in', 'take-away']);
             $table->decimal('total_price', 10, 2)->default(0);
             $table->enum('status', ['new', 'cooking', 'ready', 'payment', 'done'])->default('new');
