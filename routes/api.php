@@ -14,32 +14,30 @@ use App\Http\Controllers\API\OrderController;
 | Frontend akan mengakses endpoint ini melalui URL: /api/...
 */
 
-// 🔑 Auth (tidak butuh token)
+// Auth (public)
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// 📖 Menu list (public, untuk ditampilkan di aplikasi tanpa login)
+// Menu (public)
 Route::get('/menus', [MenuController::class, 'index']);
 Route::get('/menus/{id}', [MenuController::class, 'show']);
 
-// 🔒 Butuh token (auth:sanctum)
+// Protected (butuh token sanctum)
 Route::middleware('auth:sanctum')->group(function () {
 
     // User
     Route::get('/user', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // Menu CRUD (khusus admin / user tertentu)
+    // Menu (CRUD untuk admin)
     Route::apiResource('menus', MenuController::class)->except(['index', 'show']);
 
     // Tables
     Route::apiResource('tables', TableController::class);
 
-    // Orders
-    Route::apiResource('orders', OrderController::class);
+    // Orders (custom route harus ditulis sebelum apiResource)
     Route::get('/orders/active', [OrderController::class, 'active']);
     Route::get('/orders/history', [OrderController::class, 'history']);
-
-    // Dashboard
     Route::get('/dashboard', [OrderController::class, 'dashboard']);
+    Route::apiResource('orders', OrderController::class);
 });
