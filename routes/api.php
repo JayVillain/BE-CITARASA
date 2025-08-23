@@ -11,7 +11,6 @@ use App\Http\Controllers\API\OrderController;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
 | Semua route API didefinisikan di sini.
 | Frontend akan mengakses endpoint ini melalui URL: /api/...
 |
@@ -21,6 +20,10 @@ use App\Http\Controllers\API\OrderController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+// 📖 Menu list (public, untuk ditampilkan di aplikasi tanpa login)
+Route::get('/menus', [MenuController::class, 'index']);
+Route::get('/menus/{id}', [MenuController::class, 'show']);
+
 // 🔒 Butuh token (auth:sanctum)
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -28,8 +31,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // Menu
-    Route::apiResource('menus', MenuController::class);
+    // Menu CRUD (khusus admin / user tertentu)
+    Route::post('/menus', [MenuController::class, 'store']);
+    Route::put('/menus/{id}', [MenuController::class, 'update']);
+    Route::delete('/menus/{id}', [MenuController::class, 'destroy']);
 
     // Tables
     Route::apiResource('tables', TableController::class);
