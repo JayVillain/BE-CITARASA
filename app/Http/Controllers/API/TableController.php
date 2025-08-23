@@ -3,47 +3,59 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Table;
 use Illuminate\Http\Request;
 
 class TableController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return response()->json(Table::all(), 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'number' => 'required|unique:tables',
+            'capacity' => 'required|integer|min:1'
+        ]);
+
+        $table = Table::create($request->all());
+
+        return response()->json([
+            'message' => 'Meja berhasil ditambahkan',
+            'data' => $table
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $table = Table::findOrFail($id);
+        return response()->json($table, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $table = Table::findOrFail($id);
+
+        $request->validate([
+            'status' => 'in:available,occupied,reserved,cleaning',
+            'capacity' => 'integer|min:1'
+        ]);
+
+        $table->update($request->all());
+
+        return response()->json([
+            'message' => 'Meja berhasil diperbarui',
+            'data' => $table
+        ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $table = Table::findOrFail($id);
+        $table->delete();
+
+        return response()->json(['message' => 'Meja berhasil dihapus'], 200);
     }
 }
