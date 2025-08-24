@@ -1,0 +1,47 @@
+Laravel berhasil generate API Token pakai Sanctum
+
+regis 
+{
+  "full_name": "Budi Kundono",
+  "username": "budi123",
+  "email": "budi@example.com",
+  "phone_number": "08123456789",
+  "password": "passwordku"
+}
+
+login
+{
+  "username": "budi123",
+  "password": "passwordku"
+}
+
+
+
+
+TOKEN :2|WVLUPdIJ2yJRyReDtLHriimQH7sm4Absem6RV2wz8f8a601d 
+
+POST http://127.0.0.1:8000/api/register
+
+POST http://127.0.0.1:8000/api/login
+
+GET http://127.0.0.1:8000/api/user (cek profil user)
+
+GET http://127.0.0.1:8000/api/menus (ambil daftar menu)
+
+GET http://127.0.0.1:8000/api/tables (cek meja tersedia)
+
+POST http://127.0.0.1:8000/api/orders
+
+orders : {
+  "type": "dine-in",
+  "table_id": 1,
+  "items": [
+    { "menu_id": 1, "quantity": 2 },
+    { "menu_id": 2, "quantity": 1 }
+  ]
+}
+
+
+GET http://127.0.0.1:8000/api/orders/active
+
+9|GMkiAzFoVAmP7a8KSSKuY7VWl4hySo2SW0JjcvgBed28c32f
